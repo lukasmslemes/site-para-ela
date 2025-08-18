@@ -206,96 +206,13 @@
             text-align: center;
         }
         
-        .music-player {
+        .drive-player {
             max-width: 600px;
-            margin: 40px auto 0;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            margin: 30px auto;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
             border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .music-cover {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            object-fit: cover;
-            border: 5px solid var(--light-color);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            animation: rotate 20s linear infinite;
-            animation-play-state: paused;
-        }
-        
-        .music-player.playing .music-cover {
-            animation-play-state: running;
-        }
-        
-        .music-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
-        
-        .music-info p {
-            font-size: 1.2rem;
-            opacity: 0.8;
-            margin-bottom: 20px;
-        }
-        
-        .music-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .control-btn {
-            background: none;
-            border: none;
-            color: var(--light-color);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .control-btn:hover {
-            color: #d4b8ff;
-            transform: scale(1.1);
-        }
-        
-        .play-btn {
-            background-color: var(--light-color);
-            color: var(--primary-color);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.8rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .play-btn:hover {
-            transform: scale(1.1);
-        }
-        
-        .progress-container {
-            width: 100%;
-            height: 5px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 5px;
-            margin: 20px 0;
-            cursor: pointer;
-        }
-        
-        .progress {
-            height: 100%;
-            background-color: var(--light-color);
-            border-radius: 5px;
-            width: 0%;
-            transition: width 0.1s linear;
+            backdrop-filter: blur(5px);
         }
         
         /* Footer */
@@ -322,11 +239,6 @@
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
-        }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
         }
         
         /* Responsive */
@@ -359,49 +271,49 @@
         </div>
     </header>
     
-<!-- Gallery Section -->
-<section class="gallery" id="gallery">
-    <div class="container">
-        <h2 class="section-title">Nossos Momentos</h2>
-        <div class="photo-grid">
-            <!-- Foto 1 -->
-            <div class="photo-item">
-                <img src="https://i.imgur.com/HYiSzEi.jpg" alt="Nosso primeiro encontro">
-                <div class="photo-caption">
-                    <h3>Nosso Primeiro Encontro</h3>
-                    <p>O dia em que tudo começou...</p>
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <h2 class="section-title">Nossos Momentos</h2>
+            <div class="photo-grid">
+                <!-- Foto 1 -->
+                <div class="photo-item">
+                    <img src="https://i.imgur.com/HYiSzEi.jpg" alt="Nosso primeiro encontro">
+                    <div class="photo-caption">
+                        <h3>Nosso Primeiro Encontro</h3>
+                        <p>O dia em que tudo começou...</p>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Foto 2 -->
-            <div class="photo-item">
-                <img src="https://i.imgur.com/CNNLwrM.jpg" alt="Dia inesquecível">
-                <div class="photo-caption">
-                    <h3>Um Dia Inesquecível</h3>
-                    <p>Rimos tanto neste dia...</p>
+                
+                <!-- Foto 2 -->
+                <div class="photo-item">
+                    <img src="https://i.imgur.com/CNNLwrM.jpg" alt="Dia inesquecível">
+                    <div class="photo-caption">
+                        <h3>Um Dia Inesquecível</h3>
+                        <p>Rimos tanto neste dia...</p>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Foto 3 -->
-            <div class="photo-item">
-                <img src="https://i.imgur.com/62eNfeH.jpg" alt="Pôr do sol romântico">
-                <div class="photo-caption">
-                    <h3>Aquele Pôr do Sol</h3>
-                    <p>O momento mais romântico...</p>
+                
+                <!-- Foto 3 -->
+                <div class="photo-item">
+                    <img src="https://i.imgur.com/62eNfeH.jpg" alt="Pôr do sol romântico">
+                    <div class="photo-caption">
+                        <h3>Aquele Pôr do Sol</h3>
+                        <p>O momento mais romântico...</p>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Foto 4 -->
-            <div class="photo-item">
-                <img src="https://i.imgur.com/wUnuNVE.jpg" alt="Sorrisos juntos">
-                <div class="photo-caption">
-                    <h3>Sorrisos Juntos</h3>
-                    <p>Quando estamos juntos, tudo fica melhor.</p>
+                
+                <!-- Foto 4 -->
+                <div class="photo-item">
+                    <img src="https://i.imgur.com/wUnuNVE.jpg" alt="Sorrisos juntos">
+                    <div class="photo-caption">
+                        <h3>Sorrisos Juntos</h3>
+                        <p>Quando estamos juntos, tudo fica melhor.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
     
     <!-- Messages Section -->
     <section class="messages" id="messages">
@@ -428,24 +340,17 @@
     
     <!-- Music Section -->
     <section class="music" id="music">
-       <!-- Music Section -->
-<section class="music" id="music">
-    <div class="container">
-        <h2 class="section-title">Nossa Música</h2>
-        <p>Essa música sempre me lembra de você e de todos os momentos especiais que compartilhamos.</p>
-        
-        <div class="soundcloud-player">
-            <iframe 
-                width="100%" 
-                height="166" 
-                scrolling="no" 
-                frameborder="no" 
-                allow="autoplay"
-                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/189159134&color=%238e6ad6&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=false">
-            </iframe>
-        </div>
-    </div>
-</section>
+        <div class="container">
+            <h2 class="section-title">Nossa Música</h2>
+            <p>Essa música sempre me lembra de você e de todos os momentos especiais que compartilhamos.</p>
+            
+            <!-- Player do Google Drive -->
+            <div class="drive-player">
+                <audio controls style="width: 100%;">
+                    <source src="https://drive.google.com/uc?export=download&id=1Ve_KzXxOfr3ganVIo88anEleTlttbpKe" type="audio/mpeg">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+            </div>
         </div>
     </section>
     
@@ -456,55 +361,9 @@
             <p>Para Fu, a pessoa mais especial da minha vida.</p>
         </div>
     </footer>
-    
+
+    <!-- Script para Rolagem Suave -->
     <script>
-        // Player de música
-        const musicPlayer = document.getElementById('musicPlayer');
-        const audio = document.getElementById('audio');
-        const playBtn = document.getElementById('playBtn');
-        const playIcon = document.getElementById('playIcon');
-        const progress = document.getElementById('progress');
-        const progressContainer = document.getElementById('progressContainer');
-        
-        // Play/Pause
-        playBtn.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play();
-                playIcon.classList.remove('fa-play');
-                playIcon.classList.add('fa-pause');
-                musicPlayer.classList.add('playing');
-            } else {
-                audio.pause();
-                playIcon.classList.remove('fa-pause');
-                playIcon.classList.add('fa-play');
-                musicPlayer.classList.remove('playing');
-            }
-        });
-        
-        // Atualizar barra de progresso
-        audio.addEventListener('timeupdate', (e) => {
-            const { duration, currentTime } = e.srcElement;
-            const progressPercent = (currentTime / duration) * 100;
-            progress.style.width = `${progressPercent}%`;
-        });
-        
-        // Clicar na barra de progresso
-        progressContainer.addEventListener('click', (e) => {
-            const width = this.clientWidth;
-            const clickX = e.offsetX;
-            const duration = audio.duration;
-            audio.currentTime = (clickX / width) * duration;
-        });
-        
-        // Quando a música termina
-        audio.addEventListener('ended', () => {
-            playIcon.classList.remove('fa-pause');
-            playIcon.classList.add('fa-play');
-            musicPlayer.classList.remove('playing');
-            progress.style.width = '0%';
-        });
-        
-        // Efeito de rolagem suave
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -515,8 +374,4 @@
         });
     </script>
 </body>
-
 </html>
-
-
-
