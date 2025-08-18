@@ -280,7 +280,7 @@
                 <div class="photo-item">
                     <img src="https://i.imgur.com/CNNLwrM.jpg" alt="Nossa primeira foto <3">
                     <div class="photo-caption">
-                        <h3>Nosso Primeiro Encontro</h3>
+                        <h3>Nosso Primeiro passo/h3>
                         <p>O dia em que tudo começou...</p>
                     </div>
                 </div>
@@ -290,7 +290,7 @@
                     <img src="https://i.imgur.com/HYiSzEi.jpg" alt=>
                     <div class="photo-caption">
                         <h3>Um Dia Inesquecível</h3>
-                        <p>Rimos tanto neste dia...</p>
+                        <p></p>
                     </div>
                 </div>
                 
@@ -298,8 +298,8 @@
                 <div class="photo-item">
                     <img src="https://i.imgur.com/62eNfeH.jpg" alt="Pôr do sol romântico">
                     <div class="photo-caption">
-                        <h3>Aquele Pôr do Sol</h3>
-                        <p>O momento mais romântico...</p>
+                        <h3>Nossa melhor foto</h3>
+                        <p></p>
                     </div>
                 </div>
                 
@@ -344,35 +344,163 @@
         <h2 class="section-title">Nossa Música</h2>
         <p>Essa música sempre me lembra de você e de todos os momentos especiais que compartilhamos.</p>
         
-        <!-- Player Customizado -->
-        <div class="custom-player" style="max-width:500px; margin:30px auto; background:rgba(255,255,255,0.1); backdrop-filter:blur(5px); border-radius:15px; padding:20px; box-shadow:0 5px 15px rgba(0,0,0,0.2);">
-            <!-- Capa do Álbum -->
-            <div style="text-align:center; margin-bottom:20px;">
-                <img src="https://i.imgur.com/JKvQcZP.jpg" 
-                     style="width:150px; height:150px; border-radius:50%; object-fit:cover; border:3px solid #8e6ad6; box-shadow:0 5px 15px rgba(0,0,0,0.3);" 
-                     alt="Capa Californication">
+        <!-- Player Personalizado -->
+        <div class="custom-player" style="max-width:450px; margin:30px auto; background:rgba(255,255,255,0.1); backdrop-filter:blur(10px); border-radius:15px; padding:25px; box-shadow:0 10px 30px rgba(0,0,0,0.2);">
+            <!-- Capa do Álbum com Animação -->
+            <div class="album-cover" style="width:200px; height:200px; margin:0 auto 20px; position:relative;">
+                <img src="https://i.imgur.com/EVw5eqg.jpg" 
+                     alt="Nossa Música Especial"
+                     style="width:100%; height:100%; object-fit:cover; border-radius:50%; border:4px solid #8e6ad6; box-shadow:0 5px 15px rgba(0,0,0,0.3);"
+                     id="coverImage">
+                <div class="vinyl" style="position:absolute; top:0; left:0; width:100%; height:100%; background:url('https://i.imgur.com/5X6Jz0l.png') center/cover no-repeat; opacity:0.7; border-radius:50%; transform:scale(0.9); transition:all 0.5s ease;"></div>
             </div>
-            
-            <!-- Controles do Player -->
-            <audio id="meuPlayer" controls style="width:100%;">
-                <source src="https://github.com/lukasmslemes/site-para-ela/raw/main/californication.mp3" type="audio/mpeg">
-                Seu navegador não suporta o elemento de áudio.
-            </audio>
             
             <!-- Informações da Música -->
-            <div style="text-align:center; margin-top:15px;">
-                <h3 style="color:#fff; margin-bottom:5px;">Californication</h3>
-                <p style="color:#d4b8ff; margin:0;">Red Hot Chili Peppers</p>
+            <div style="text-align:center; margin-bottom:20px;">
+                <h3 style="color:#fff; margin-bottom:5px; font-size:1.5rem;" id="songTitle">Californication</h3>
+                <p style="color:#d4b8ff; margin:0; font-size:1rem;" id="artistName">Red Hot Chili Peppers</p>
             </div>
+            
+            <!-- Barra de Progresso -->
+            <div style="margin:20px 0;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                    <span style="color:#d4b8ff; font-size:0.8rem;" id="currentTime">0:00</span>
+                    <span style="color:#d4b8ff; font-size:0.8rem;" id="duration">0:00</span>
+                </div>
+                <div style="width:100%; height:6px; background:rgba(255,255,255,0.2); border-radius:3px; cursor:pointer;" id="progressBar">
+                    <div style="width:0%; height:100%; background:#8e6ad6; border-radius:3px; transition:width 0.1s linear;" id="progress"></div>
+                </div>
+            </div>
+            
+            <!-- Controles Principais -->
+            <div style="display:flex; justify-content:center; align-items:center; gap:25px; margin-bottom:15px;">
+                <button id="prevBtn" style="background:none; border:none; color:#d4b8ff; font-size:1.2rem; cursor:pointer;">
+                    <i class="fas fa-step-backward"></i>
+                </button>
+                
+                <button id="playBtn" style="background:#6d44b8; color:white; border:none; width:50px; height:50px; border-radius:50%; font-size:1.5rem; cursor:pointer; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
+                    <i class="fas fa-play" id="playIcon"></i>
+                </button>
+                
+                <button id="nextBtn" style="background:none; border:none; color:#d4b8ff; font-size:1.2rem; cursor:pointer;">
+                    <i class="fas fa-step-forward"></i>
+                </button>
+            </div>
+            
+            <!-- Controle de Volume -->
+            <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin-top:15px;">
+                <i class="fas fa-volume-down" style="color:#d4b8ff;"></i>
+                <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.7" 
+                       style="width:100px; accent-color:#8e6ad6; cursor:pointer;">
+                <i class="fas fa-volume-up" style="color:#d4b8ff;"></i>
+            </div>
+            
+            <!-- Elemento de Áudio (hidden) -->
+            <audio id="audioElement">
+                <source src="https://github.com/lukasmslemes/site-para-ela/raw/main/californication.mp3" type="audio/mpeg">
+            </audio>
         </div>
     </div>
 </section>
+
+<script>
+    // Elementos do Player
+    const audio = document.getElementById('audioElement');
+    const playBtn = document.getElementById('playBtn');
+    const playIcon = document.getElementById('playIcon');
+    const progressBar = document.getElementById('progressBar');
+    const progress = document.getElementById('progress');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationEl = document.getElementById('duration');
+    const volumeControl = document.getElementById('volumeControl');
+    const coverImage = document.getElementById('coverImage');
+    const vinyl = document.querySelector('.vinyl');
+
+    // Play/Pause
+    playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play();
+            playIcon.classList.replace('fa-play', 'fa-pause');
+            coverImage.style.animation = 'rotate 20s linear infinite';
+            vinyl.style.animation = 'rotate 20s linear infinite';
+        } else {
+            audio.pause();
+            playIcon.classList.replace('fa-pause', 'fa-play');
+            coverImage.style.animation = 'none';
+            vinyl.style.animation = 'none';
+        }
+    });
+
+    // Atualizar Progresso
+    audio.addEventListener('timeupdate', () => {
+        const { duration, currentTime } = audio;
+        const progressPercent = (currentTime / duration) * 100;
+        progress.style.width = `${progressPercent}%`;
+        
+        // Formatando o tempo
+        const durationMinutes = Math.floor(duration / 60);
+        let durationSeconds = Math.floor(duration % 60);
+        if (durationSeconds < 10) durationSeconds = `0${durationSeconds}`;
+        
+        if (duration) {
+            durationEl.textContent = `${durationMinutes}:${durationSeconds}`;
+        }
+        
+        const currentMinutes = Math.floor(currentTime / 60);
+        let currentSeconds = Math.floor(currentTime % 60);
+        if (currentSeconds < 10) currentSeconds = `0${currentSeconds}`;
+        
+        currentTimeEl.textContent = `${currentMinutes}:${currentSeconds}`;
+    });
+
+    // Clicar na Barra de Progresso
+    progressBar.addEventListener('click', (e) => {
+        const width = progressBar.clientWidth;
+        const clickX = e.offsetX;
+        const duration = audio.duration;
+        audio.currentTime = (clickX / width) * duration;
+    });
+
+    // Controle de Volume
+    volumeControl.addEventListener('input', () => {
+        audio.volume = volumeControl.value;
+    });
+
+    // Quando a música terminar
+    audio.addEventListener('ended', () => {
+        playIcon.classList.replace('fa-pause', 'fa-play');
+        progress.style.width = '0%';
+        currentTimeEl.textContent = '0:00';
+        coverImage.style.animation = 'none';
+        vinyl.style.animation = 'none';
+    });
+
+    // Animações CSS
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .album-cover:hover img {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+        
+        #playBtn:hover {
+            transform: scale(1.1);
+            transition: transform 0.2s ease;
+        }
+    `;
+    document.head.appendChild(style);
+</script>
     
     <!-- Footer -->
     <footer>
         <div class="container">
             <p>Feito com <span class="footer-heart"><i class="fas fa-heart"></i></span> por Lukas</p>
-            <p>Para Fu, a pessoa mais especial da minha vida.</p>
+            <p>Para Fu, a pessoa mais especial.</p>
         </div>
     </footer>
 
@@ -389,5 +517,6 @@
     </script>
 </body>
 </html>
+
 
 
