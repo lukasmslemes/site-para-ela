@@ -338,21 +338,28 @@
         </div>
     </section>
     
-    <!-- Music Section -->
-    <section class="music" id="music">
-        <div class="container">
-            <h2 class="section-title">Nossa Música</h2>
-            <p>Essa música sempre me lembra de você e de todos os momentos especiais que compartilhamos.</p>
-            
-            <!-- Player do Google Drive -->
-            <div class="drive-player">
-                <audio controls style="width: 100%;">
-                    <source src="https://drive.google.com/uc?export=download&id=1Ve_KzXxOfr3ganVIo88anEleTlttbpKe" type="audio/mpeg">
-                    Seu navegador não suporta o elemento de áudio.
-                </audio>
-            </div>
+   <!-- Music Section -->
+<section class="music" id="music">
+    <div class="container">
+        <h2 class="section-title">Nossa Música</h2>
+        <p>Essa música sempre me lembra de você e de todos os momentos especiais que compartilhamos.</p>
+        
+        <!-- Player Alternativo (100% funcional) -->
+        <div class="drive-player" style="max-width:600px; margin:0 auto; text-align:center;">
+            <p style="margin-bottom:15px; color:#d4b8ff;">
+                <i class="fas fa-music"></i> Clique para ouvir nossa música especial
+            </p>
+            <a href="https://drive.google.com/uc?export=download&id=1Ve_KzXxOfr3ganVIo88anEleTlttbpKe" 
+               target="_blank"
+               style="display:inline-block; background:#6d44b8; color:white; padding:12px 25px; border-radius:50px; text-decoration:none; font-weight:bold;">
+               <i class="fas fa-play"></i> Ouvir Música
+            </a>
+            <p style="margin-top:10px; font-size:0.9em; opacity:0.8;">
+                (Será aberta em uma nova aba)
+            </p>
         </div>
-    </section>
+    </div>
+</section>
     
     <!-- Footer -->
     <footer>
@@ -375,3 +382,4 @@
     </script>
 </body>
 </html>
+
