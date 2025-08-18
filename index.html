@@ -278,7 +278,7 @@
             <div class="photo-grid">
                 <!-- Foto 1 -->
                 <div class="photo-item">
-                    <img src="https://i.imgur.com/HYiSzEi.jpg" alt="Nosso primeiro encontro">
+                    <img src="https://i.imgur.com/CNNLwrM.jpg" alt="Nossa primeira foto <3">
                     <div class="photo-caption">
                         <h3>Nosso Primeiro Encontro</h3>
                         <p>O dia em que tudo começou...</p>
@@ -287,7 +287,7 @@
                 
                 <!-- Foto 2 -->
                 <div class="photo-item">
-                    <img src="https://i.imgur.com/CNNLwrM.jpg" alt="Dia inesquecível">
+                    <img src="https://i.imgur.com/HYiSzEi.jpg" alt=>
                     <div class="photo-caption">
                         <h3>Um Dia Inesquecível</h3>
                         <p>Rimos tanto neste dia...</p>
@@ -338,25 +338,32 @@
         </div>
     </section>
     
-   <!-- Music Section -->
+<!-- Music Section -->
 <section class="music" id="music">
     <div class="container">
         <h2 class="section-title">Nossa Música</h2>
         <p>Essa música sempre me lembra de você e de todos os momentos especiais que compartilhamos.</p>
         
-        <!-- Player Alternativo (100% funcional) -->
-        <div class="drive-player" style="max-width:600px; margin:0 auto; text-align:center;">
-            <p style="margin-bottom:15px; color:#d4b8ff;">
-                <i class="fas fa-music"></i> Clique para ouvir nossa música especial
-            </p>
-            <a href="https://drive.google.com/uc?export=download&id=1Ve_KzXxOfr3ganVIo88anEleTlttbpKe" 
-               target="_blank"
-               style="display:inline-block; background:#6d44b8; color:white; padding:12px 25px; border-radius:50px; text-decoration:none; font-weight:bold;">
-               <i class="fas fa-play"></i> Ouvir Música
-            </a>
-            <p style="margin-top:10px; font-size:0.9em; opacity:0.8;">
-                (Será aberta em uma nova aba)
-            </p>
+        <!-- Player Customizado -->
+        <div class="custom-player" style="max-width:500px; margin:30px auto; background:rgba(255,255,255,0.1); backdrop-filter:blur(5px); border-radius:15px; padding:20px; box-shadow:0 5px 15px rgba(0,0,0,0.2);">
+            <!-- Capa do Álbum -->
+            <div style="text-align:center; margin-bottom:20px;">
+                <img src="https://i.imgur.com/JKvQcZP.jpg" 
+                     style="width:150px; height:150px; border-radius:50%; object-fit:cover; border:3px solid #8e6ad6; box-shadow:0 5px 15px rgba(0,0,0,0.3);" 
+                     alt="Capa Californication">
+            </div>
+            
+            <!-- Controles do Player -->
+            <audio id="meuPlayer" controls style="width:100%;">
+                <source src="https://github.com/lukasmslemes/site-para-ela/raw/main/californication.mp3" type="audio/mpeg">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+            
+            <!-- Informações da Música -->
+            <div style="text-align:center; margin-top:15px;">
+                <h3 style="color:#fff; margin-bottom:5px;">Californication</h3>
+                <p style="color:#d4b8ff; margin:0;">Red Hot Chili Peppers</p>
+            </div>
         </div>
     </div>
 </section>
@@ -382,4 +389,5 @@
     </script>
 </body>
 </html>
+
 
