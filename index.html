@@ -206,15 +206,6 @@
             text-align: center;
         }
         
-        .drive-player {
-            max-width: 600px;
-            margin: 30px auto;
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
-        }
-        
         /* Footer */
         footer {
             background-color: #0a0a12;
@@ -294,7 +285,7 @@
             }
         }
         
-        /* Modal */
+        /* Modal - Efeito de Carta Abrindo */
         .modal {
             display: none;
             position: fixed;
@@ -307,6 +298,10 @@
             z-index: 2000;
             justify-content: center;
             align-items: center;
+        }
+        
+        .modal.open {
+            display: flex;
             animation: fadeInModal 0.3s ease;
         }
         
@@ -329,18 +324,14 @@
             position: relative;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(142, 106, 214, 0.3);
-            animation: slideUpModal 0.4s ease;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
         }
         
-        @keyframes slideUpModal {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        .modal.open .modal-content {
+            transform: scale(1);
+            opacity: 1;
         }
         
         .close-modal {
@@ -352,6 +343,7 @@
             color: #888;
             transition: color 0.3s ease;
             line-height: 1;
+            z-index: 10;
         }
         
         .close-modal:hover {
@@ -365,6 +357,11 @@
             border-radius: 15px;
             margin-bottom: 25px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .modal-photo.glow {
+            box-shadow: 0 0 25px rgba(142, 106, 214, 0.8), 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
         .modal-message {
@@ -372,6 +369,7 @@
             line-height: 1.8;
             color: var(--light-color);
             margin: 20px 0;
+            min-height: 100px;
         }
         
         .modal-message span {
@@ -392,6 +390,53 @@
             font-size: 2rem;
             margin: 10px 0;
             animation: pulse 1.5s infinite;
+        }
+        
+        /* Efeito de partículas (corações) */
+        .heart-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 2001;
+            font-size: 20px;
+            animation: floatUp 3s ease-out forwards;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0.5);
+                opacity: 0;
+            }
+        }
+        
+        /* Gradiente animado do fundo */
+        .modal-content {
+            background: linear-gradient(135deg, #1e1e2e, #2a2a3a, #1e1e2e);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        
+        /* Efeito de digitação */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            margin-left: 2px;
+            background-color: var(--secondary-color);
+            animation: blink 0.7s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
         
         /* Responsive */
@@ -661,11 +706,11 @@
     <div id="surpriseModal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <img src="https://i.imgur.com/SUA_FOTO_AQUI.jpg" alt="Última lembrança" class="modal-photo" id="modalPhoto">
+            <img src="https://i.imgur.com/0jQb9zt.png" alt="Última lembrança" class="modal-photo" id="modalPhoto">
             <div class="heart-decoration">
                 <i class="fas fa-heart"></i>
             </div>
-            <div class="modal-message">
+            <div class="modal-message" id="typingMessage">
                 <strong>Foram <span>230 dias</span>.</strong><br>
                 Em nenhum deles eu me arrependi de nós.
             </div>
@@ -675,8 +720,8 @@
             <div class="heart-decoration">
                 <i class="fas fa-heart"></i>
             </div>
-            <!-- Áudio da surpresa - vai tocar e continuar mesmo fechando o modal -->
-            <audio id="surpriseAudio" loop>
+            <!-- Áudio da surpresa - toca uma vez e para -->
+            <audio id="surpriseAudio">
                 <source src="despedida.mp3" type="audio/mpeg">
             </audio>
         </div>
@@ -783,36 +828,153 @@
         `;
         document.head.appendChild(style);
 
-        // ========== SURPRESA ==========
+        // ========== SURPRESA COM EFEITOS ==========
         const surpriseBtn = document.getElementById('surpriseBtn');
         const modal = document.getElementById('surpriseModal');
         const closeModal = document.querySelector('.close-modal');
         const surpriseAudio = document.getElementById('surpriseAudio');
+        const modalPhoto = document.getElementById('modalPhoto');
+        const messageElement = document.getElementById('typingMessage');
         
-        // Variável para controlar se a música já começou
-        let musicStarted = false;
+        // Texto completo da mensagem
+        const fullMessageHTML = '<strong>Foram <span>230 dias</span>.</strong><br>Em nenhum deles eu me arrependi de nós.';
         
-        // Abrir modal
+        // Função para criar corações caindo
+        function createHeartRain() {
+            const colors = ['#6d44b8', '#8e6ad6', '#d4b8ff', '#ff69b4'];
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-particle';
+                    heart.innerHTML = ['❤️', '💜', '💖', '💗'][Math.floor(Math.random() * 4)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.fontSize = (15 + Math.random() * 20) + 'px';
+                    heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    heart.style.animationDuration = (2 + Math.random() * 2) + 's';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 80);
+            }
+        }
+        
+        // Função para efeito de digitação
+        function typeMessage(element, html, callback) {
+            // Criar um container temporário para extrair o texto puro
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            const textNodes = [];
+            
+            // Extrair texto e tags
+            const extractContent = (node) => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    textNodes.push({ type: 'text', content: node.textContent });
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    const tagName = node.tagName.toLowerCase();
+                    const attributes = {};
+                    for (let attr of node.attributes) {
+                        attributes[attr.name] = attr.value;
+                    }
+                    textNodes.push({ type: 'tag', tagName, attributes, children: [] });
+                    node.childNodes.forEach(child => extractContent(child));
+                    textNodes.push({ type: 'tagClose', tagName });
+                }
+            };
+            extractContent(tempDiv);
+            
+            element.innerHTML = '';
+            let currentIndex = 0;
+            let charIndex = 0;
+            let currentText = '';
+            
+            function typeNextChar() {
+                if (currentIndex >= textNodes.length) {
+                    if (callback) callback();
+                    return;
+                }
+                
+                const node = textNodes[currentIndex];
+                
+                if (node.type === 'tag') {
+                    const newElement = document.createElement(node.tagName);
+                    for (let [key, value] of Object.entries(node.attributes)) {
+                        newElement.setAttribute(key, value);
+                    }
+                    element.appendChild(newElement);
+                    currentIndex++;
+                    typeNextChar();
+                } else if (node.type === 'tagClose') {
+                    currentIndex++;
+                    typeNextChar();
+                } else if (node.type === 'text') {
+                    if (charIndex < node.content.length) {
+                        const lastChild = element.lastChild;
+                        if (lastChild && lastChild.nodeType === Node.TEXT_NODE) {
+                            lastChild.textContent += node.content[charIndex];
+                        } else {
+                            element.appendChild(document.createTextNode(node.content[charIndex]));
+                        }
+                        charIndex++;
+                        setTimeout(typeNextChar, 50);
+                    } else {
+                        charIndex = 0;
+                        currentIndex++;
+                        typeNextChar();
+                    }
+                }
+            }
+            
+            typeNextChar();
+        }
+        
+        // Função para adicionar brilho na foto
+        function addPhotoGlow() {
+            modalPhoto.classList.add('glow');
+            setTimeout(() => {
+                modalPhoto.classList.remove('glow');
+            }, 2000);
+        }
+        
+        // Variável para controlar se os efeitos já foram executados
+        let effectsExecuted = false;
+        
+        // Abrir modal com todos os efeitos
         surpriseBtn.addEventListener('click', () => {
-            modal.style.display = 'flex';
-            // Tocar a música apenas se ainda não começou
-            if (!musicStarted) {
+            modal.classList.add('open');
+            
+            if (!effectsExecuted) {
+                // 1. Chuva de corações
+                createHeartRain();
+                
+                // 2. Brilho na foto (após um pequeno delay)
+                setTimeout(() => {
+                    addPhotoGlow();
+                }, 300);
+                
+                // 3. Texto com efeito de digitação
+                messageElement.innerHTML = '';
+                typeMessage(messageElement, fullMessageHTML);
+                
+                // 4. Tocar a música (apenas uma vez)
                 surpriseAudio.currentTime = 0;
                 surpriseAudio.play().catch(e => console.log('Erro ao tocar música:', e));
-                musicStarted = true;
+                
+                effectsExecuted = true;
             } else {
-                // Se já começou, só dá play se estiver pausada
-                if (surpriseAudio.paused) {
-                    surpriseAudio.play().catch(e => console.log('Erro ao tocar música:', e));
-                }
+                // Se já abriu antes, só mostra o texto normalmente
+                messageElement.innerHTML = fullMessageHTML;
+                // Toca a música novamente
+                surpriseAudio.currentTime = 0;
+                surpriseAudio.play().catch(e => console.log('Erro ao tocar música:', e));
             }
         });
         
-        // Fechar modal - mas a música CONTINUA tocando
+        // Fechar modal
         function closeModalFunction() {
-            modal.style.display = 'none';
-            // NÃO pausa a música - ela continua tocando
-            // Só não paramos a música para que ela continue como trilha de fundo
+            modal.classList.remove('open');
+            // Não pausa a música para manter o efeito
         }
         
         closeModal.addEventListener('click', closeModalFunction);
@@ -824,12 +986,10 @@
             }
         });
         
-        // Configurar a foto do modal (SUBSTITUA PELO LINK DA SUA FOTO)
-        const modalPhoto = document.getElementById('modalPhoto');
-        modalPhoto.src = "https://i.imgur.com/SUA_FOTO_AQUI.jpg"; // Coloque o link da sua foto do Imgur
-        
-        // A música vai tocar em loop (já tem o atributo loop no HTML)
-        // Ela só para quando a página for fechada ou atualizada
+        // Quando a música terminar, não toca novamente
+        surpriseAudio.addEventListener('ended', () => {
+            // Não faz nada - a música para e não repete
+        });
     </script>
     
     <!-- Script para Rolagem Suave -->
