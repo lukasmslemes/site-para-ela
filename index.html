@@ -828,7 +828,7 @@
         `;
         document.head.appendChild(style);
 
-        // ========== SURPRESA COM EFEITOS ==========
+               // ========== SURPRESA COM EFEITOS ==========
         const surpriseBtn = document.getElementById('surpriseBtn');
         const modal = document.getElementById('surpriseModal');
         const closeModal = document.querySelector('.close-modal');
@@ -839,23 +839,56 @@
         // Texto completo da mensagem
         const fullMessageHTML = '<strong>Foram <span>230 dias</span>.</strong><br>Em nenhum deles eu me arrependi de nós.';
         
-        // Função para criar corações caindo
+        // Adicionar a animação CSS dos corações (se não existir)
+        if (!document.querySelector('#heartAnimationStyle')) {
+            const heartStyle = document.createElement('style');
+            heartStyle.id = 'heartAnimationStyle';
+            heartStyle.textContent = `
+                @keyframes floatDown {
+                    0% {
+                        transform: translateY(0) rotate(0deg);
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translateY(100vh) rotate(360deg);
+                        opacity: 0;
+                    }
+                }
+                
+                .heart-particle {
+                    position: fixed;
+                    pointer-events: none;
+                    z-index: 9999;
+                    font-size: 20px;
+                    user-select: none;
+                    filter: drop-shadow(0 0 5px rgba(109, 68, 184, 0.5));
+                }
+            `;
+            document.head.appendChild(heartStyle);
+        }
+        
+        // Função para criar corações caindo (versão corrigida)
         function createHeartRain() {
-            const colors = ['#6d44b8', '#8e6ad6', '#d4b8ff', '#ff69b4'];
-            for (let i = 0; i < 25; i++) {
+            const colors = ['#6d44b8', '#8e6ad6', '#d4b8ff', '#ff69b4', '#ff99cc'];
+            const hearts = ['❤️', '💜', '💖', '💗', '💝', '💕', '💓'];
+            
+            for (let i = 0; i < 35; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
                     heart.className = 'heart-particle';
-                    heart.innerHTML = ['❤️', '💜', '💖', '💗'][Math.floor(Math.random() * 4)];
+                    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
                     heart.style.left = Math.random() * 100 + '%';
-                    heart.style.fontSize = (15 + Math.random() * 20) + 'px';
+                    heart.style.top = '-30px';
+                    heart.style.fontSize = (15 + Math.random() * 25) + 'px';
                     heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-                    heart.style.animationDuration = (2 + Math.random() * 2) + 's';
+                    heart.style.animation = `floatDown ${2 + Math.random() * 2}s ease-out forwards`;
                     document.body.appendChild(heart);
                     
                     setTimeout(() => {
-                        heart.remove();
-                    }, 3000);
+                        if (heart && heart.remove) {
+                            heart.remove();
+                        }
+                    }, 4000);
                 }, i * 80);
             }
         }
@@ -887,7 +920,6 @@
             element.innerHTML = '';
             let currentIndex = 0;
             let charIndex = 0;
-            let currentText = '';
             
             function typeNextChar() {
                 if (currentIndex >= textNodes.length) {
@@ -968,6 +1000,11 @@
                 // Toca a música novamente
                 surpriseAudio.currentTime = 0;
                 surpriseAudio.play().catch(e => console.log('Erro ao tocar música:', e));
+                // Também cria corações ao reabrir
+                createHeartRain();
+                setTimeout(() => {
+                    addPhotoGlow();
+                }, 300);
             }
         });
         
@@ -1003,5 +1040,4 @@
             });
         });
     </script>
-</body>
 </html>
